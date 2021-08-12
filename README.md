@@ -1,1 +1,1 @@
-# flutter_cooker
+A simple command-line application.
