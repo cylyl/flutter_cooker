@@ -83,7 +83,7 @@ class Gen {
       } else {
         ReCase reCase = new ReCase(basenameWithoutExtension(f.path));
         String className = reCase.pascalCase;
-        generator = BlocGenerator(className);
+        generator = BlocGenerator(this, className);
         var code = generator.generateDartClasses().code;
         File file = new File(blocDir + '/' + reCase.snakeCase + '.dart');
         file.writeAsString(code);
@@ -106,7 +106,7 @@ class Gen {
       } else {
         ReCase reCase = new ReCase(basenameWithoutExtension(f.path));
         String className = reCase.pascalCase;
-        generator = WidgetGenerator(appDir, className);
+        generator = WidgetGenerator(this, appDir, className);
         new File(listDir + '/' + reCase.snakeCase + '_widget.dart')
             .writeAsString(
 //      print(
@@ -307,6 +307,51 @@ class Gen {
       p('mkdir '+m.snakeCase.replaceAll('&', ''));
       p('echo "import \'package:flutter/cupertino.dart\'; \n class '+m.pascalCase.replaceAll('&', '')+'Page extends StatelessWidget{  @override  Widget build(BuildContext context) {        throw UnimplementedError();  }}" > '+m.snakeCase.replaceAll('&', '')+'/'+m.snakeCase.replaceAll('&', '')+'_page.dart');
     });*/
+  }
+
+  List<String> getBlocs(String tname) {
+    List<String> res = [];
+    String strs = File(appDir + '../../the_hunter_app/lib/bloc_config.dart').readAsStringSync();
+    strs = strs.substring(strs.indexOf('getTabViewBlocs'), strs.lastIndexOf('getTabViewBlocs'));
+    strs.replaceAll('\n', '');
+    var block = strs.split('widgetName');
+    block.forEach((blk) {
+      int start = blk.indexOf('==');
+      int end = blk.indexOf('else if');
+      if(end > start && start >= 0) {
+        String name = blk.substring(      start    , blk.indexOf(")")).replaceAll('=', '')
+            .replaceAll('\'', '');
+        if(tname.toLowerCase().trim() == name.toLowerCase().trim()) {
+          blk.split('\n').forEach((line) {
+            if(line.contains("//") == false
+                && line.contains('add')
+            ) {
+              res.add(line.substring(line.indexOf('(')+1, line.indexOf('.of')));
+            }
+          });
+        }
+      }
+    });
+    res.add('CommonOptionFormBloc');
+    return res;
+  }
+
+  String importModel(List<String> blocs) {
+    String code = '';
+    blocs.forEach((e) {
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      code += 'import \'package:rest_client/model/' + bloc.snakeCase + '.dart\';\n';
+    });
+    return code;
+  }
+
+  String importBloc(List<String> blocs) {
+    String code = '';
+    blocs.forEach((e) {
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      code += 'import \'package:rest_client/bloc/' + bloc.snakeCase + '.dart\';\n';
+    });
+    return code;
   }
 }
 
