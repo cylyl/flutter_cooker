@@ -324,7 +324,7 @@ class Gen {
         if(tname.toLowerCase().trim() == name.toLowerCase().trim()) {
           blk.split('\n').forEach((line) {
             if(line.contains("//") == false
-                && line.contains('add')
+                && line.contains('Bloc.of(context)')
             ) {
               res.add(line.substring(line.indexOf('(')+1, line.indexOf('.of')));
             }

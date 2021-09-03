@@ -5,8 +5,8 @@ void main(List<String> arguments) {
   Gen gen = Gen('../ubiqtrac_flutter/rest_client/lib/');
 
   gen.genBloc(opts: [
-    '/user.dart',
-    '/customer.dart',
+    // '/user.dart',
+    // '/customer.dart',
     // 'request_parameter.dart',
     // 'uresponse.dart',
     // 'common_option.dart',
