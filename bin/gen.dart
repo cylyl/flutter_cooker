@@ -77,7 +77,10 @@ class Gen {
     BlocGenerator generator;
     Directory dir = Directory(modelDir);
     dir.list(recursive: false).forEach((f) {
-      bool skip = opts.where((e) => f.path.endsWith(e)).isNotEmpty;
+      String filename = f.path.substring(f.path.lastIndexOf('/') + 1);
+      bool skip = opts.where(
+              (e) {return filename == e ? true : false;}
+      ).isNotEmpty;
       if (!exclude) skip = !skip;
       if (skip) {
       } else {
@@ -100,7 +103,10 @@ class Gen {
     WidgetGenerator generator;
     Directory dir = Directory(modelDir);
     dir.list(recursive: false).forEach((f) {
-      bool skip = opts.where((e) => f.path.endsWith(e)).isNotEmpty;
+      String filename = f.path.substring(f.path.lastIndexOf('/') + 1);
+      bool skip = opts.where(
+              (e) {return filename == e ? true : false;}
+      ).isNotEmpty;
       if (!exclude) skip = !skip;
       if (skip) {
       } else {
@@ -339,7 +345,7 @@ class Gen {
   String importModel(List<String> blocs) {
     String code = '';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += 'import \'package:rest_client/model/' + bloc.snakeCase + '.dart\';\n';
     });
     return code;
@@ -348,7 +354,7 @@ class Gen {
   String importBloc(List<String> blocs) {
     String code = '';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += 'import \'package:rest_client/bloc/' + bloc.snakeCase + '.dart\';\n';
     });
     return code;

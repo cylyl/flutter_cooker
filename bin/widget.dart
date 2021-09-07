@@ -552,7 +552,7 @@ class ListClassDefinition extends AbstractClassDefinition {
   String genMultiStreamProvider(List<String> blocs) {
     var code = '';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += '      StreamProvider<BlocState<' +
           bloc.pascalCase +
           '>>(\n'
@@ -594,7 +594,7 @@ class ListClassDefinition extends AbstractClassDefinition {
     var code2 = '';
     var code3 = 'if (';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += 'var ' +
           bloc.camelCase +
           'BlocState = ' +
@@ -612,7 +612,7 @@ class ListClassDefinition extends AbstractClassDefinition {
     bool hasNext = ite.moveNext();
     for (; hasNext;) {
       var e = ite.current;
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code3 += bloc.camelCase +
           'BlocState is ' +
           bloc.pascalCase +
@@ -635,7 +635,7 @@ class ListClassDefinition extends AbstractClassDefinition {
       bool hasNext = ite.moveNext();
       for (; hasNext;) {
         var e = ite.current;
-        ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+        ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
         code +=
             bloc.pascalCase + 'FormBloc, BlocState<' + bloc.pascalCase + '>';
         hasNext = ite.moveNext();
@@ -655,7 +655,7 @@ class ListClassDefinition extends AbstractClassDefinition {
       bool hasNext = ite.moveNext();
       for (; hasNext;) {
         var e = ite.current;
-        ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+        ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
         code +=
             bloc.camelCase + 'FormBloc, ' + bloc.camelCase + 'FormBlocState';
         hasNext = ite.moveNext();
@@ -671,7 +671,7 @@ class ListClassDefinition extends AbstractClassDefinition {
     var code = '';
     var code2 = '';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       // code += 'var ' + bloc.camelCase + 'BlocState = ' + bloc.camelCase + 'Bloc.state;';
 
       code2 += 'if (' +
@@ -686,7 +686,7 @@ class ListClassDefinition extends AbstractClassDefinition {
   String fetchData(List<String> blocs) {
     var code = '';
     blocs.forEach((e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += bloc.pascalCase +
           'FormBloc.of(context).fetchData(context, buildFields: true, buildOptions: true, requestParameter: requestParameter);\n';
     });
@@ -696,7 +696,7 @@ class ListClassDefinition extends AbstractClassDefinition {
   String genPaginationIf(List<String> blocs) {
     String code = '';
     blocs.forEachIndexed((index, e) {
-      ReCase bloc = ReCase(e.replaceAll('FormBloc', ''));
+      ReCase bloc = ReCase(e.replaceAll('FormBloc', '').replaceAll('Bloc', ''));
       code += 'if(activeTab == ' +
           index.toString() +
           ') { paginationList = ' +
