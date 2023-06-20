@@ -73,15 +73,15 @@ class Gen {
     });
   }
 
-  void genBloc({required List<String> opts, required bool exclude}) {
+  void genBloc({required List<String> excludes}) {
     BlocGenerator generator;
     Directory dir = Directory(modelDir);
     dir.list(recursive: false).forEach((f) {
       String filename = f.path.substring(f.path.lastIndexOf('/') + 1);
-      bool skip = opts.where(
+      bool skip = excludes.where(
               (e) {return filename == e ? true : false;}
       ).isNotEmpty;
-      if (!exclude) skip = !skip;
+
       if (skip) {
       } else {
         ReCase reCase = new ReCase(basenameWithoutExtension(f.path));
@@ -99,15 +99,14 @@ class Gen {
 //    print("add to API Client >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   }
 
-  void genWidget({required List<String> opts, required bool exclude}) {
+  void genWidget({required List<String> excludes}) {
     WidgetGenerator generator;
     Directory dir = Directory(modelDir);
     dir.list(recursive: false).forEach((f) {
       String filename = f.path.substring(f.path.lastIndexOf('/') + 1);
-      bool skip = opts.where(
+      bool skip = excludes.where(
               (e) {return filename == e ? true : false;}
       ).isNotEmpty;
-      if (!exclude) skip = !skip;
       if (skip) {
       } else {
         ReCase reCase = new ReCase(basenameWithoutExtension(f.path));
@@ -361,13 +360,4 @@ class Gen {
   }
 }
 
-///Bloc Generator based on Json file.
-// void main() {
-// new Gen().genModel();
-// new Gen().genBloc();
-//  new Gen().genProvider();
-//  new Gen().genWidget();
-//  new Gen().intl();
-//  new Gen().genClientCRUD();
-//  new Gen().getMenu();
-// }
+

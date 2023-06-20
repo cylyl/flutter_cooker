@@ -573,62 +573,26 @@ class BlocClassDefinition extends AbstractClassDefinition {
         modelName +
         'BlocState> {\n'
             '  ' +
-        modelName +
-        'Bloc() : super(' +
-        modelName +
-        'InitState());\n'
-            '\n'
-            '  @override\n'
-            '  Stream<' +
-        modelName +
-        'BlocState> mapEventToState(' +
-        modelName +
-        'BlocEvent event) async* {\n'
-            '    if (event is ' +
-        modelName +
-        'RequestEvent) {\n'
-            '      yield ' +
-        modelName +
-        'DownloadingState();\n'
-            '      try {\n'
-            '        List<' +
-        modelName +
-        '> ' +
-        modelNameCamelCase +
-        's = await RestClient.instance\n'
-            '            .get' +
-        modelName +
-        '(requestParameter: event.requestParameter);\n'
-            '        yield ' +
-        modelName +
-        'DownloadedState(' +
-        modelNameCamelCase +
-        's);\n'
-            '      } on Exception catch (e) {\n'
-            '        yield ' +
-        modelName +
-        'ErrorState(e);\n'
-            '      }\n'
-            '    }\n'
-            '    else if (event is ' +
-        modelName +
-        'CreateEvent) {\n'
-            '      try {\n'
-            '        List<' +
-        modelName +
-        '> customers = [' +
-        modelName +
-        '()];\n'
-            '        yield ' +
-        modelName +
-        'DownloadedState(customers);\n'
-            '      } on Exception catch (e) {\n'
-            '        yield ' +
-        modelName +
-        'ErrorState(e);\n'
-            '      }\n'
-            '    }\n'
-            '  }\n'
+        '  '+modelName+'Bloc() : super('+modelName+'InitState()) {\n'
+        '    on<'+modelName+'RequestEvent>((event, emit) async {\n'
+        '      emit('+modelName+'DownloadingState());\n'
+        '      try {\n'
+        '        List<'+modelName+'> '+modelNameCamelCase+'s = await RestClient.instance\n'
+        '            .get'+modelName+'(requestParameter: event.requestParameter);\n'
+        '        emit('+modelName+'DownloadedState('+modelNameCamelCase+'s));\n'
+        '      } on Exception catch (e) {\n'
+        '        emit('+modelName+'ErrorState(e));\n'
+        '      }\n'
+        '    });\n'
+        '    on<'+modelName+'CreateEvent>((event, emit) async {\n'
+        '      try {\n'
+        '        List<'+modelName+'> customers = ['+modelName+'()];\n'
+        '        emit('+modelName+'DownloadedState(customers));\n'
+        '      } on Exception catch (e) {\n'
+        '        emit('+modelName+'ErrorState(e));\n'
+        '      }\n'
+        '    });\n'
+        '  }\n'
             '\n'
             '  static ' +
         modelName +
