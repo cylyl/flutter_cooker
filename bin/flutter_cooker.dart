@@ -10,7 +10,7 @@ Future<void> main(List<String> args) async {
   if (args.length < 3) {
     print('Error: Invalid number of arguments.' + args.length.toString());
     print('Usage: dart flutter_cooker.dart <model,bloc,provider,widget,intl,crud,menu>  <config_file> <output_dir> <exclude file>');
-    print('Usage: dart flutter_cooker.dart  config.dart out_dir "a.dart,b.dart"');
+    print('Usage: dart flutter_cooker.dart  model config.dart out_dir "a.dart,b.dart"');
     exit(1);
   }
 
